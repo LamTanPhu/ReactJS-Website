@@ -4,7 +4,7 @@ import './Product.css';
 
 const products = {
     drones: [
-        { id: 1, name: 'Drone X100', price: '$500', imageUrl: 'https://via.placeholder.com/150' },
+        { id: 1, name: 'Drone X100', price: '$500', imageUrl: 'https://static.wixstatic.com/media/ea26fd_52b0032d7b754a47ac9659248097c920~mv2_d_2000_1499_s_2.png/v1/fill/w_417,h_312,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/ea26fd_52b0032d7b754a47ac9659248097c920~mv2_d_2000_1499_s_2.png' },
         { id: 2, name: 'Drone X200', price: '$750', imageUrl: '' },
     ],
     cameras: [
