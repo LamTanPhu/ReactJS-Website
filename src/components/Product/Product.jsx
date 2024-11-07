@@ -1,46 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import './Product.css';
 
-const products = {
-    drones: [
-        { id: 1, name: 'Drone X100', price: '$500', imageUrl: 'https://static.wixstatic.com/media/ea26fd_52b0032d7b754a47ac9659248097c920~mv2_d_2000_1499_s_2.png/v1/fill/w_417,h_312,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/ea26fd_52b0032d7b754a47ac9659248097c920~mv2_d_2000_1499_s_2.png' },
-        { id: 2, name: 'Drone X200', price: '$750', imageUrl: '' },
-    ],
-    cameras: [
-        { id: 3, name: 'Camera Z5', price: '$400', imageUrl: 'https://via.placeholder.com/150' },
-        { id: 4, name: 'Camera Z7', price: '$600', imageUrl: 'https://via.placeholder.com/150' },
-    ],
-    accessories: [
-        { id: 5, name: 'Accessory Pack 1', price: '$50', imageUrl: 'https://via.placeholder.com/150' },
-        { id: 6, name: 'Accessory Pack 2', price: '$75', imageUrl: '' },
-    ],
-};
-
 const Product = () => {
-    const { category } = useParams();
-    if (!category) {
-        return <div>No category selected</div>;
-    }
+    const { category } = useParams(); // Get category from URL params
+    const [products, setProducts] = useState([]); // State to store products
+    const [loading, setLoading] = useState(true); // State to manage loading status
 
-    const selectedCategory = products[category] || [];
+    useEffect(() => {
+        // Fetch products based on category from Strapi API
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get(`http://localhost:1337/api/products?filters[category][$eq]=${category}`);
+                console.log(response.data); // Log the response to debug
+                setProducts(response.data.data); // Store products in state
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            } finally {
+                setLoading(false); // Set loading to false when data is fetched
+            }
+        };
+
+        fetchProducts();
+    }, [category]); // Dependency array to run effect on category change
+
+    if (loading) {
+        return <div>Loading...</div>; // Display loading message while waiting for products
+    }
 
     return (
         <div className="product-page">
-            <h1>{category.charAt(0).toUpperCase() + category.slice(1)}</h1>
+            <h1>{category.charAt(0).toUpperCase() + category.slice(1)}</h1> {/* Display category name */}
             <div className="product-grid">
-                {selectedCategory.map(product => (
+                {products.map(product => (
                     <div key={product.id} className="product-card">
                         <img 
-                            src={product.imageUrl || 'https://via.placeholder.com/150'} 
-                            alt={product.name} 
-                            className="product-image" 
+                            src={product.imageURL || 'https://via.placeholder.com/150'} // Fix: Directly use product.imageURL
+                            alt={product.name} // Fix: Directly use product.name
+                            className="product-image"
                         />
-                        <h2>{product.name}</h2>
-                        <p>{product.price}</p>
+                        <h2>{product.name}</h2> {/* Fix: Directly use product.name */}
+                        <p>{product.price} USD</p> {/* Fix: Directly use product.price */}
                         
-                        {/* Hover button for View Details */}
-                        <Link to={`/${category}/${product.id}`} className="view-details-btn">
+                        {/* Link to product details page */}
+                        <Link to={`/${category}/${product.documentId}`} className="view-details-btn">
                             View Details
                         </Link>
                     </div>
