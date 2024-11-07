@@ -1,0 +1,82 @@
+/* ProductDetails.css */
+
+.product-details-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+}
+
+.product-details-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1200px;
+    width: 100%;
+    gap: 40px; /* Space between image and content */
+}
+
+.product-details-image {
+    max-width: 450px; /* Set a max width for the image */
+    height: auto;
+    object-fit: cover; /* Make sure the image covers the space */
+    border-radius: 8px; /* Slight rounding of the corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for better visual appeal */
+}
+
+.product-details-info {
+    flex: 1;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px; /* Add space between sections */
+}
+
+h2 {
+    font-size: 2rem; /* Increase font size for product name */
+    font-weight: bold;
+    color: #333;
+}
+
+p {
+    font-size: 1.2rem; /* Larger font for description */
+    color: #555;
+}
+
+.product-details-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between input and button */
+}
+
+.quantity-input {
+    width: 80px;
+    padding: 8px;
+    font-size: 1.1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-to-cart-button {
+    padding: 12px 24px;
+    background-color: #28a745;
+    color: white;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart-button:hover {
+    background-color: #218838;
+}
+
+.product-category {
+    font-size: 1.1rem;
+    color: #777;
+    font-style: italic;
+}
