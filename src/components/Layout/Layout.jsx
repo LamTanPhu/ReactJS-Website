@@ -1,28 +1,42 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom'; // Import useNavigate for navigation
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faUser } from '@fortawesome/free-solid-svg-icons';
 import './Layout.css';
 import { Button, Form, FormControl } from 'react-bootstrap';
 
 const Layout = ({ children }) => {
+    const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
+
+    // Function to handle search
+    const handleSearch = (event) => {
+        event.preventDefault();
+        // Navigate to the search page with or without a query
+        navigate(`/search?q=${searchQuery}`);
+    };
+
     return (
         <div>
-        {/* Header Section */}
-        {/* Header Section */}
-        <header>
+            {/* Header Section */}
+            <header>
                 <div className="top-header">
                     {/* Left side: Logo and Search Form */}
                     <div className="header-left">
                         <div className="logo">Drone Store</div>
 
-                        <Form className="search-bar d-flex">
+                        {/* Search Form */}
+                        <Form className="search-bar d-flex" onSubmit={handleSearch}>
                             <FormControl
                                 type="search"
                                 placeholder="Search for products"
                                 aria-label="Search"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <Button variant="outline-light" className="ms-2">Search</Button>
+                            <Button variant="outline-light" type="submit" className="ms-2">
+                                Search
+                            </Button>
                         </Form>
                     </div>
 
@@ -60,19 +74,17 @@ const Layout = ({ children }) => {
                 </div>
             </div>
 
-        {/* Page Content */}
-        <main>{children}</main>
+            {/* Page Content */}
+            <main>{children}</main>
 
-        {/* Footer Section */}
-        <footer className="footer">
+            {/* Footer Section */}
+            <footer className="footer">
                 <div className="footer-content">
-                    {/* Column 1: About Us */}
                     <div className="footer-column">
                         <h3>About Us</h3>
                         <p>Drone Store is your one-stop-shop for high-quality drones and accessories.</p>
                     </div>
 
-                    {/* Column 2: Quick Links */}
                     <div className="footer-column">
                         <h3>Quick Links</h3>
                         <ul>
@@ -83,7 +95,6 @@ const Layout = ({ children }) => {
                         </ul>
                     </div>
 
-                    {/* Column 3: Contact */}
                     <div className="footer-column">
                         <h3>Contact</h3>
                         <ul>
@@ -92,7 +103,6 @@ const Layout = ({ children }) => {
                         </ul>
                     </div>
 
-                    {/* Column 4: Social Media */}
                     <div className="footer-column">
                         <h3>Follow Us</h3>
                         <ul>

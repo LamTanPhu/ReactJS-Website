@@ -4,6 +4,7 @@ import HomePage from './components/HomePage/HomePage';
 import Product from './components/Product/Product';
 import ProductDetails from './components/ProductDetails/ProductDetails';
 import Layout from './components/Layout/Layout';
+import SearchPage from './components/SearchPage/SearchPage'; // Import the SearchPage component
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/:category" element={<Product />} />
                     <Route path="/:category/:productId" element={<ProductDetails />} />
+                    <Route path="/search" element={<SearchPage />} />
                 </Routes>
             </Layout>
         </Router>

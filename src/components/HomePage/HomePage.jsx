@@ -20,7 +20,7 @@ export default function HomePage() {
                 <div className="banner-item">
                     <img src="https://static.wixstatic.com/media/c22c23_e140bfa8cd6f4cb2ac5ee6e204f64073~mv2.jpg/v1/fill/w_1149,h_702,al_t,q_85,usm_0.66_1.00_0.01,enc_auto/c22c23_e140bfa8cd6f4cb2ac5ee6e204f64073~mv2.jpg" alt="Product Image 1" className="banner-item-image" />
                     <div className="banner-item-content">
-                        <h2>Advanced Drone Solutions</h2>
+                        <h2>Advanced Cameras</h2>
                         <button className="shop-now-btn">Explore Now</button>
                     </div>
                 </div>
