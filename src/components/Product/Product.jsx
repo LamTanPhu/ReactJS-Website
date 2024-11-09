@@ -9,14 +9,24 @@ const Product = () => {
     const [loading, setLoading] = useState(true); // State to manage loading status
 
     useEffect(() => {
+        // Normalize category to lowercase to handle case sensitivity
+        const normalizedCategory = category.toLowerCase();
+        console.log('Category:', normalizedCategory);  // Log the category
+
         // Fetch products based on category from Strapi API
         const fetchProducts = async () => {
             try {
-                const response = await axios.get(`http://localhost:1337/api/products?filters[category][$eq]=${category}`);
-                console.log(response.data); // Log the response to debug
-                setProducts(response.data.data); // Store products in state
+                const response = await axios.get(`http://localhost:1337/api/products?filters[category][$eq]=${normalizedCategory}`);
+                console.log('API Response:', response.data); // Log the response to debug
+
+                if (response.data.data) {
+                    setProducts(response.data.data); // Store products in state
+                } else {
+                    setProducts([]); // Clear products if response is empty
+                }
             } catch (error) {
                 console.error('Error fetching products:', error);
+                setProducts([]); // Ensure products state is cleared on error
             } finally {
                 setLoading(false); // Set loading to false when data is fetched
             }
@@ -31,24 +41,28 @@ const Product = () => {
 
     return (
         <div className="product-page">
-            <h1>{category.charAt(0).toUpperCase() + category.slice(1)}</h1> {/* Display category name */}
+            <h1>{category.charAt(0).toUpperCase() + category.slice(1)}</h1>
             <div className="product-grid">
-                {products.map(product => (
-                    <div key={product.id} className="product-card">
-                        <img 
-                            src={product.imageURL || 'https://via.placeholder.com/150'} // Fix: Directly use product.imageURL
-                            alt={product.name} // Fix: Directly use product.name
-                            className="product-image"
-                        />
-                        <h2>{product.name}</h2> {/* Fix: Directly use product.name */}
-                        <p>{product.price} USD</p> {/* Fix: Directly use product.price */}
-                        
-                        {/* Link to product details page */}
-                        <Link to={`/${category}/${product.documentId}`} className="view-details-btn">
-                            View Details
-                        </Link>
-                    </div>
-                ))}
+                {products.length > 0 ? (
+                    products.map(product => (
+                        <div key={product.id} className="product-card">
+                            <img
+                                src={product.imageURL || 'https://via.placeholder.com/150'}
+                                alt={product.name}
+                                className="product-image"
+                            />
+                            <h2>{product.name}</h2> {/* Fix: Directly use product.name */}
+                            <p>{product.price} USD</p> {/* Fix: Directly use product.price */}
+
+                            {/* Link to product details page */}
+                            <Link to={`/${category}/${product.documentId}`} className="view-details-btn">
+                                View Details
+                            </Link>
+                        </div>
+                    ))
+                ) : (
+                    <div>No products found in this category.</div>
+                )}
             </div>
         </div>
     );

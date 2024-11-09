@@ -1,17 +1,18 @@
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { CartContext } from '../Cart/CartContext';
 import './ProductDetails.css';
 
 const ProductDetails = () => {
-    const { category, productId } = useParams();  // Use productId as documentId
+    const { category, productId } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    const { addToCart } = useContext(CartContext); // Access addToCart from CartContext
 
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {
-                // Use documentId in the API request
                 const response = await axios.get(`http://localhost:1337/api/products?filters[documentId][$eq]=${productId}`);
                 if (response.data && response.data.data.length > 0) {
                     setProduct(response.data.data[0]);
@@ -36,6 +37,11 @@ const ProductDetails = () => {
         return <div>Product not found</div>;
     }
 
+    const handleAddToCart = () => {
+        const quantity = document.querySelector('.quantity-input').value;
+        addToCart(product, quantity); // Use the addToCart function from context
+    };
+
     return (
         <div className="product-details-page">
             <div className="product-details-container">
@@ -49,7 +55,9 @@ const ProductDetails = () => {
                     <p>{product?.description || 'No description available.'}</p>
                     <div className="product-details-controls">
                         <input type="number" min="1" defaultValue="1" className="quantity-input" />
-                        <button className="add-to-cart-button">Add to Cart</button>
+                        <button onClick={handleAddToCart} className="add-to-cart-button">
+                            Add to Cart
+                        </button>
                     </div>
                     <p className="product-category">Category: {product?.category || 'Unknown'}</p>
                 </div>
