@@ -137,6 +137,10 @@
     padding-left: 0;
 }
 
+.footer-column li {
+    color: white;
+}
+
 .footer-column ul li {
     margin-bottom: 10px;
 }

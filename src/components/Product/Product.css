@@ -23,6 +23,7 @@
     align-items: center; 
     justify-content: space-between;
     position: relative; /* Positioning for the button */
+    overflow: hidden; /* Prevent content overflow */
 }
 
 .product-card:hover {
@@ -39,9 +40,10 @@
 }
 
 .view-details-btn {
-    display: none; /* Hidden by default */
+    opacity: 0; /* Hidden by default */
+    visibility: hidden; /* Ensures it's not interactable when hidden */
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     padding: 10px 20px;
@@ -50,10 +52,12 @@
     border-radius: 5px;
     text-decoration: none;
     font-size: 1rem;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .product-card:hover .view-details-btn {
-    display: inline-block; /* Show on hover */
+    opacity: 1; /* Show button on hover */
+    visibility: visible;
 }
 
 h2 {
